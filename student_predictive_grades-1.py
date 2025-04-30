@@ -8,7 +8,8 @@ from sklearn.preprocessing import LabelEncoder
 
 #add funtion
 
-
+df = ""
+model = ""
 # Allows the user to select a file which will then be used throughout the code
 def load_dataset():
     file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv"), ("Excel files", "*.xlsx;*.xls")])
@@ -82,4 +83,3 @@ result_text.pack(pady=10)
 
 # Please add funtion comment
 root.mainloop()
-

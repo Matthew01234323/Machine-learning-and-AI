@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 #add funtion
 
 
-# Please add funtion comment
+# Allows the user to select a file which will then be used throughout the code
 def load_dataset():
     file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv"), ("Excel files", "*.xlsx;*.xls")])
     if file_path:
@@ -24,7 +24,7 @@ def load_dataset():
             messagebox.showerror("Error", f"Failed to load dataset: {e}")
     return None
 
-# Please add funtion comment
+# Uses the selected fields from the selected dataset to then train the model
 def train_model(df, features, target):
     try:
         X = df[features]
@@ -40,7 +40,7 @@ def train_model(df, features, target):
         messagebox.showerror("Error", f"Failed to train model: {e}")
     return None
 
-# Please add funtion comment
+# Predicts the outcome of the selected field from the training done in prior
 def make_predictions(model, df, features):
     try:
         X_new = df[features]
@@ -50,33 +50,33 @@ def make_predictions(model, df, features):
     except Exception as e:
         messagebox.showerror("Error", f"Failed to make predictions: {e}")
 
-# Please add funtion comment
+# Titles the GUI window as "Studen Predicitive Grades"
 root = tk.Tk()
 root.title("Student Predictive Grades")
 
-# Please add funtion comment
+# Displays the load button
 load_button = tk.Button(root, text="Load Dataset", command=lambda: load_dataset())
 load_button.pack(pady=10)
 
-#Please add funtion comment
+# Displays the text "Features"
 tk.Label(root, text="Features (comma-separated):").pack()
 features_entry = tk.Entry(root)
 features_entry.pack(pady=5)
 
-# Please add funtion comment
+# Displays the text "Target"
 tk.Label(root, text="Target:").pack()
 target_entry = tk.Entry(root)
 target_entry.pack(pady=5)
 
-# Please add funtion comment
+# Displays the train button
 train_button = tk.Button(root, text="Train Model", command=lambda: train_model(df, features_entry.get().split(','), target_entry.get()))
 train_button.pack(pady=10)
 
-# Please add funtion comment
+# Displays the predict button
 predict_button = tk.Button(root, text="Make Predictions", command=lambda: make_predictions(model, df, features_entry.get().split(',')))
 predict_button.pack(pady=10)
 
-# Please add funtion comment
+# Displays the result
 result_text = tk.Text(root, height=20, width=80)
 result_text.pack(pady=10)
 

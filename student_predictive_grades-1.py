@@ -5,11 +5,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score 
 from sklearn.preprocessing import LabelEncoder
-
+from sklearn.impute import SimpleImputer # Data preprocessing
+import numpy as np
 
 
 #Changed random forest to regressor
-#add funtion
 #simple imputer for datapreprocessing
 
 df = ""
@@ -25,7 +25,12 @@ def load_dataset():
                 df = pd.read_csv(file_path)
             else:
                 df = pd.read_excel(file_path, engine='openpyxl')
-            messagebox.showinfo("Success", "Dataset loaded successfully *but did you check the script!")
+            imputer = SimpleImputer(strategy='most_frequent')                   #defines the process imputer
+            df.replace("varies", np.nan, inplace=True)                          #Removes the text "varies"
+            df.replace("unknown", np.nan, inplace=True)                          #Removes the text "unknown"
+            df.replace("200", np.nan, inplace=True)                             #Removes the numerical value 200 as it is not valid
+            df = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)    #Fills in empty data with the mode from the field
+            messagebox.showinfo("Success", "Dataset loaded successfully")
             return df
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load dataset: {e}")

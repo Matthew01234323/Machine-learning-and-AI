@@ -2,16 +2,22 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score 
 from sklearn.preprocessing import LabelEncoder
 
+
+
+#Changed random forest to regressor
 #add funtion
+#simple imputer for datapreprocessing
 
 df = ""
 model = ""
+
 # Allows the user to select a file which will then be used throughout the code
 def load_dataset():
+    global df 
     file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv"), ("Excel files", "*.xlsx;*.xls")])
     if file_path:
         try:
@@ -27,15 +33,17 @@ def load_dataset():
 
 # Uses the selected fields from the selected dataset to then train the model
 def train_model(df, features, target):
+    global model
     try:
         X = df[features]
         y = df[target]
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        model = RandomForestClassifier()
+        model = RandomForestRegressor()
+
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        messagebox.showinfo("Model Trained", f"Model trained successfully! Accuracy: {accuracy:.2f}")
+        score = r2_score(y_test, y_pred)
+        messagebox.showinfo("Model Trained", f"Model trained successfully! R² Score: {score:.2f}")
         return model
     except Exception as e:
         messagebox.showerror("Error", f"Failed to train model: {e}")
